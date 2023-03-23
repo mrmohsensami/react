@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Container from "../../hoc/Container";
 
 function Main(props) {
+    const btnRef = useRef(null);
+    useEffect(() => {
+        btnRef.current.click();
+    }, []);
     const btn = {
         backgroundColor: "#7b1fa2",
         color: "#fff",
@@ -11,7 +15,7 @@ function Main(props) {
     return (
         <Container>
             <h1>App</h1>
-            <button style={btn} onClick={props.click}>
+            <button ref={btnRef} style={btn} onClick={props.click}>
                 Show/Hide Products
             </button>
         </Container>
