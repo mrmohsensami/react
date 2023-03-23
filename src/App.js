@@ -1,9 +1,15 @@
 import React from "react";
 import "./App.css";
 
-import Product from "./components/Product/Product";
+import Main from "./components/Main/Main";
+import ProductList from "./components/ProductList/ProductList";
+import Wrapper from "./hoc/Wrapper";
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log("App.js constructor");
+    }
     state = {
         products: [
             { id: 1, title: "Book 1", price: 99 },
@@ -12,6 +18,9 @@ class App extends React.Component {
         ],
         showProducts: false,
     };
+    componentDidMount() {
+        console.log("App.js componentDidMount");
+    }
     toggleProductHandler = () => {
         const show = this.state.showProducts;
         this.setState({ showProducts: !show });
@@ -38,26 +47,16 @@ class App extends React.Component {
         this.setState({ products: products });
     };
     render() {
-        const btn = {
-            backgroundColor: "#7b1fa2",
-            color: "#fff",
-            borderRadius: "3px",
-            padding: "12px 18px",
-        };
+        console.log("App.js render");
         return (
-            <div className="center">
-                <h1>App</h1>
-                <button style={btn} onClick={this.toggleProductHandler}>
-                    Show/Hide Products
-                </button>
+            <Wrapper center="center">
+                <Main click={this.toggleProductHandler} />
                 {this.state.showProducts ? (
                     <div>
-                        {this.state.products.map((item, index) => {
-                            return <Product title={item.title} price={item.price} change={(event) => this.changeTitleHandler(event, item.id)} click={() => this.removeProduct(index)} key={index} />;
-                        })}
+                        <ProductList products={this.state.products} click={this.removeProduct} change={this.changeTitleHandler} />
                     </div>
                 ) : null}
-            </div>
+            </Wrapper>
         );
     }
 }
